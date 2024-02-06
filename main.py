@@ -1,5 +1,4 @@
 from flask import Flask, redirect, request
-
 app = Flask(__name__)
 
 SECRET = None
@@ -17,7 +16,7 @@ def get_secret():
     if SECRET == None:
         try:
             with open("secret", "r") as f:
-                s = f.read()
+                s = f.read().strip()
                 if len(s) == 0:
                     raise ValueError("Secret file empty len(s) is 0")
                 SECRET = s
