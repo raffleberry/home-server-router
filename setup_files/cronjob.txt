@@ -1,0 +1,1 @@
+30 * * * * /usr/bin/python3 /opt/router/update.py 2>&1 | logger -t routerlog

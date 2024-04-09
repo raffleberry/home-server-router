@@ -1,1 +1,0 @@
-30 * * * * /bin/bash /opt/router/update.sh 2>&1 | logger -t routerlog
