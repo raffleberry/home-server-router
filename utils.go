@@ -2,10 +2,17 @@ package main
 
 import (
 	"errors"
+	"fmt"
+	"log"
 	"net"
 	"net/http"
 	"strings"
+	"time"
 )
+
+func logg(r *http.Request, code int, str string) {
+	log.Printf("%s : %s - %d - %s", r.Method, r.RequestURI, code, str)
+}
 
 func getClientIP(r *http.Request) (string, error) {
 	ips := r.Header.Get("X-Forwarded-For")
@@ -35,4 +42,12 @@ func getClientIP(r *http.Request) (string, error) {
 	}
 
 	return "", errors.New("IP not found")
+}
+
+func noIpResponse(w http.ResponseWriter) {
+	if stats.LastPing.IsZero() {
+		fmt.Fprintf(w, "Didn't receive any pings since start %s", stats.StartTime.String())
+	} else {
+		fmt.Fprintf(w, "Waiting for ping, last ping received: %.0f seconds ago", time.Since(stats.LastPing).Seconds())
+	}
 }
