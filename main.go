@@ -54,6 +54,17 @@ func getIpToRedirect(r *http.Request) string {
 	return db.Ip
 }
 
+var redirectBaseUrl = "/"
+
+func (d *Db) RedirectHandler(r *http.Request) string {
+	stats.mu.Lock()
+	defer stats.mu.Unlock()
+	stats.Redirections += 1
+
+	return "http://" + getIpToRedirect(r) + ":9876/" + r.URL.Path[len(homeBaseUrl):]
+
+}
+
 func (d *Db) RedirectHome(r *http.Request) string {
 	stats.mu.Lock()
 	defer stats.mu.Unlock()
