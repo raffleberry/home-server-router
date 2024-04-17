@@ -10,8 +10,8 @@ import (
 	"time"
 )
 
-func logg(r *http.Request, code int, str string) {
-	log.Printf("%s : %s - %d - %s", r.Method, r.RequestURI, code, str)
+func logg(r *http.Request, returnCode int, str string) {
+	log.Printf("%s : %s - %d - %s", r.Method, r.RequestURI, returnCode, str)
 }
 
 func getClientIP(r *http.Request) (string, error) {
